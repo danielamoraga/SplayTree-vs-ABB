@@ -6,14 +6,7 @@ struct ABB {
 
     bool search(int x) {
         if (x == r) return true;
-        if (x < r) {
-            if (izq == nullptr) return false;
-            else izq->search(x);
-        }
-        if (x > r) {
-            if (der == nullptr) return false;
-            else der->search(x);
-        }
-        return false;
+        else if (x < r) return izq != nullptr && izq->search(x);
+        else if (x > r) return der != nullptr && der->search(x);
     }
 };
