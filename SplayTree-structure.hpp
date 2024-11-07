@@ -4,6 +4,28 @@ struct SplayTree {
     SplayTree* izq;
     SplayTree* der;
 
+    private:
+
+    // Rotación derecha
+    SplayTree* rotateRight(SplayTree* y) {
+        SplayTree* x = y->izq;
+        y->izq = x->der;
+        x->der = y;
+        return x;
+    }
+
+    // Rotación izquierda
+    SplayTree* rotateLeft(SplayTree* x) {
+        SplayTree* y = x->der;
+        x->der = y->izq;
+        y->izq = x;
+        return y;
+    }
+
+    void splay(int x){}
+
+    public:
+
     bool search(int x) {
         /* buscar x como en ABB */
         if (x == r) {
@@ -26,6 +48,5 @@ struct SplayTree {
         return der->search(x);
     }
 
-    void splay(int x){}
 
 };
