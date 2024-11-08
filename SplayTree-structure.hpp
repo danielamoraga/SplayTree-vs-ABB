@@ -1,3 +1,5 @@
+using namespace std;
+
 /* Splay Tree */
 struct SplayTree {
     int r;
@@ -7,7 +9,7 @@ struct SplayTree {
     private:
 
     // Rotación derecha
-    SplayTree* rotateRight(SplayTree* y) {
+    SplayTree* zig(SplayTree* y) {
         SplayTree* x = y->izq;
         y->izq = x->der;
         x->der = y;
@@ -15,11 +17,11 @@ struct SplayTree {
     }
 
     // Rotación izquierda
-    SplayTree* rotateLeft(SplayTree* x) {
-        SplayTree* y = x->der;
-        x->der = y->izq;
-        y->izq = x;
-        return y;
+    SplayTree* zag(SplayTree* y) {
+        SplayTree* x = y->der;
+        y->der = x->izq;
+        x->izq = y;
+        return x;
     }
 
     void splay(int x){}
