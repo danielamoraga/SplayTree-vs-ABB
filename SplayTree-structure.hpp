@@ -56,5 +56,5 @@ struct SplayTree {
         return der->search(x);
     }
 
-
+    void insert(int x) {}
 };
