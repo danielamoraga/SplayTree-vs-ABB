@@ -24,6 +24,12 @@ struct SplayTree {
         return x;
     }
 
+    SplayTree* zigzig(SplayTree* z) {
+        SplayTree* y = zig(z);
+        SplayTree* x = zig(y);
+        return x;
+    }
+
     void splay(int x){}
 
     public:
