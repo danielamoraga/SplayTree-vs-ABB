@@ -6,6 +6,8 @@ struct SplayTree {
     SplayTree* izq;
     SplayTree* der;
 
+    SplayTree(int key) : r(key), izq(nullptr), der(nullptr) {}
+
    private:
     // Rotación derecha
     void zig() {
