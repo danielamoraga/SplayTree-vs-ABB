@@ -44,7 +44,7 @@ struct SplayTree {
     }
 
     void splay(int x) {
-        if (this == nullptr || *r == x) return;
+        if (r == nullptr || *r == x) return;
 
         if (x < *r) {  // Caso: `x` está en el subárbol izquierdo
             if (this->izq == nullptr) return;
