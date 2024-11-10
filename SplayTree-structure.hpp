@@ -34,12 +34,12 @@ struct SplayTree {
     }
 
     void zigzag() {
-        if (this->izq) this->izq->zag();
+        if (izq) izq->zag();
         zig();
     }
 
     void zagzig() {
-        if (this->der) this->der->zig();
+        if (der) der->zig();
         zag();
     }
 
