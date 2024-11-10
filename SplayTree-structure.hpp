@@ -9,28 +9,68 @@ struct SplayTree {
     private:
 
     // Rotación derecha
-    SplayTree* zig(SplayTree* y) {
-        SplayTree* x = y->izq;
-        y->izq = x->der;
-        x->der = y;
-        return x;
+    void zig() {
+        SplayTree* x = this->izq;
+        this->izq = x->der;
+        x->der = this;
     }
 
     // Rotación izquierda
-    SplayTree* zag(SplayTree* y) {
-        SplayTree* x = y->der;
-        y->der = x->izq;
-        x->izq = y;
-        return x;
+    void zag() {
+        SplayTree* x = this->der;
+        this->der = x->izq;
+        x->izq = this;
     }
 
-    SplayTree* zigzig(SplayTree* z) {
-        SplayTree* y = zig(z);
-        SplayTree* x = zig(y);
-        return x;
+    void zigzig() {
+        if (izq) izq->zig();
+        zig();
     }
 
-    void splay(int x){}
+    void zagzag() {
+        if (der) der->zag();
+        zag();
+    }
+
+    void zigzag() {
+        if (this->izq) this->izq->zag();
+        zig();
+    }
+
+    void zagzig() {
+        if (this->der) this->der->zig();
+        zag();
+    }
+
+    void splay(int x) {
+        if (this == nullptr || this->r == x) return;
+
+        if (x < this->r) { // Caso: `x` está en el subárbol izquierdo
+            if (this->izq == nullptr) return;
+
+            if (x < this->izq->r) { // Zig-Zig
+                this->izq->splay(x);
+                zigzig();
+            } else if (x > this->izq->r) { // Zig-Zag
+                this->izq->der->splay(x);
+                zigzag();
+            } else {
+                zig();
+            }
+        } else { // Caso: `x` está en el subárbol derecho
+            if (this->der == nullptr) return;
+
+            if (x > this->der->r) { // Zag-Zag
+                this->der->splay(x);
+                zagzag();
+            } else if (x < this->der->r) { // Zag-Zig
+                this->der->izq->splay(x);
+                zagzig();
+            } else {
+                zag();
+            }
+        }
+    }
 
     public:
 
