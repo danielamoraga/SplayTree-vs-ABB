@@ -42,10 +42,10 @@ int main() {
 
         // second scenario
 
-        auto start = high_resolution_clock::now();
+        start = high_resolution_clock::now();
         third_scenario(abb, st, A, N, M, b);
-        auto end = high_resolution_clock::now();
-        double first_time = duration_cast<nanoseconds>(end - start).count();
+        end = high_resolution_clock::now();
+        first_time = duration_cast<nanoseconds>(end - start).count();
         cout << "Tiempo de ejecución del tercer escenario: " << first_time << "ns" << endl;
 
         // fourth scenario
