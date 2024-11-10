@@ -6,8 +6,7 @@ struct SplayTree {
     SplayTree* izq;
     SplayTree* der;
 
-    private:
-
+   private:
     // Rotación derecha
     void zig() {
         SplayTree* x = this->izq;
@@ -45,51 +44,55 @@ struct SplayTree {
     void splay(int x) {
         if (this == nullptr || this->r == x) return;
 
-        if (x < this->r) { // Caso: `x` está en el subárbol izquierdo
+        if (x < this->r) {  // Caso: `x` está en el subárbol izquierdo
             if (this->izq == nullptr) return;
 
-            if (x < this->izq->r) { // Zig-Zig
+            if (x < this->izq->r) {  // Zig-Zig
                 this->izq->splay(x);
                 zigzig();
-            } else if (x > this->izq->r) { // Zig-Zag
+            }
+            else if (x > this->izq->r) {  // Zig-Zag
                 this->izq->der->splay(x);
                 zigzag();
-            } else {
+            }
+            else {
                 zig();
             }
-        } else { // Caso: `x` está en el subárbol derecho
+        }
+        else {  // Caso: `x` está en el subárbol derecho
             if (this->der == nullptr) return;
 
-            if (x > this->der->r) { // Zag-Zag
+            if (x > this->der->r) {  // Zag-Zag
                 this->der->splay(x);
                 zagzag();
-            } else if (x < this->der->r) { // Zag-Zig
+            }
+            else if (x < this->der->r) {  // Zag-Zig
                 this->der->izq->splay(x);
                 zagzig();
-            } else {
+            }
+            else {
                 zag();
             }
         }
     }
 
-    public:
-
+   public:
     bool search(int x) {
         /* buscar x como en ABB */
         if (x == r) {
             splay(x);
             return true;
         }
-        else if (x < r){
-            if (izq == nullptr){
-                splay(r); // splay del que debería ser el parent de x
+        else if (x < r) {
+            if (izq == nullptr) {
+                splay(r);  // splay del que debería ser el parent de x
                 return false;
             }
             return izq->search(x);
         }
         else if (x > r) {
-            if (der == nullptr){
-                splay(r); // splay del que debería ser el parent de x
+            if (der == nullptr) {
+                splay(r);  // splay del que debería ser el parent de x
                 return false;
             }
         }
