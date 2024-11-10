@@ -23,7 +23,7 @@ void insert_random(vector<int> A, ABB* abb, SplayTree* st) {
 }
 
 // Hacer M búsquedas por valores escogidos entre los elementos insertados
-void searching(vector<int> A, ABB* abb, SplayTree* st, int M, bool b) {
+void searching(vector<int> A, ABB* abb, SplayTree* st, int M,  bool& b) {
     int N = A.size();
     // buscar v[i] M/N veces
     vector<int> B; // valores a buscar
@@ -55,8 +55,9 @@ void searching(vector<int> A, ABB* abb, SplayTree* st, int M, bool b) {
         if (abb->search(x)) b = true;
         else b = false;
         //cout << "Buscando " << x << " en Splay Tree..." << endl;
-        //st->search(x);
-        //if (st->search(x)) cout << "Búsqueda exitosa." << endl;
+        st->search(x);
+        if (st->search(x)) b = true;
+        else b = false;
         //else cout << "Búsqueda infructuosa." << endl;
     }
 }
