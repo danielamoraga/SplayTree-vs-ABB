@@ -21,19 +21,13 @@ int main() {
     int b = true;
     ABB* abb = new ABB;
     SplayTree* st = new SplayTree;
-    
+
     for (double i = 0.1; i < 1.0; i+=0.1) {
         int N = pow(10, 6) * i;
         int M = 100 * N;
 
         vector<int> A = random_vector(N);
-        //cout << "Vector A generado: {" ;
-        //for (int i = 0; i < N-1; i++) {
-        //    cout << A[i] << ", ";
-        //}
-        //cout << A[N-1];
-        //cout << "}" << endl;
-        
+
         auto start = high_resolution_clock::now();
         first_scenario(abb, st, A, N, M, b);
         auto end = high_resolution_clock::now();

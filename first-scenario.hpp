@@ -8,16 +8,8 @@
 // Insertar N enteros distintos de manera aleatoria en un ABB y un Splay Tree
 void insert_random(vector<int> A, ABB* abb, SplayTree* st) {
     random_shuffle(A.begin(), A.end()); // desordenar el vector para insertar aleatoriamente
-    //cout << "Vector A aleatorizado: {";
-    //for (int i = 0; i < A.size()-1; i++) {
-        //cout << A[i] << ", ";
-    //}
-    //cout << A[A.size()-1];
-    //cout << "}" << endl;
     for (int x : A) {
-        //cout << "Insertando " << x << " en ABB" << endl;
         abb->insert(x);
-        //cout << "Insertando " << x << " en Splay Tree" << endl;
         st->insert(x);
     }
 }
@@ -34,31 +26,17 @@ void searching(vector<int> A, ABB* abb, SplayTree* st, int M,  bool& b) {
             B.push_back(val);
         }
     }
-    //cout << "Vector B generado: {" ;
-    //for (int i = 0; i < B.size()-1; i++) {
-    //    cout << B[i] << ", ";
-    //}
-    //cout << B[B.size()-1];
-    //cout << "}" << endl;
 
     random_shuffle(B.begin(), B.end()); // permutación aleatoria de B
-    //cout << "Vector B aleatorizado: {" ;
-    //for (int i = 0; i < B.size()-1; i++) {
-    //    cout << B[i] << ", ";
-    //}
-    //cout << B[B.size()-1];
-    //cout << "}" << endl;
 
     for (int x : B) {
-        //cout << "Buscando " << x << " en ABB..." << endl;
         abb->search(x);
         if (abb->search(x)) b = true;
         else b = false;
-        //cout << "Buscando " << x << " en Splay Tree..." << endl;
+
         st->search(x);
         if (st->search(x)) b = true;
         else b = false;
-        //else cout << "Búsqueda infructuosa." << endl;
     }
 }
 
