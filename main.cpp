@@ -10,7 +10,7 @@ void test_scenario(int scenario, vector<int>& A, int N, int M, ofstream& file){
     double time_abb, time_splay;
 
     // ABB
-    cout << "ABB" << endl;
+    cout << "Probando para ABB" << endl;
     ABB* abb = new ABB;
     auto start = high_resolution_clock::now();
     execute_scenario(scenario, abb, A, M);
@@ -19,7 +19,7 @@ void test_scenario(int scenario, vector<int>& A, int N, int M, ofstream& file){
     delete abb;
 
     // Splay Tree
-    cout << "Splay Tree" << endl;
+    cout << "Probando Splay Tree" << endl;
     SplayTree* st = new SplayTree;
     start = high_resolution_clock::now();
     execute_scenario(scenario, st, A, M);
