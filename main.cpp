@@ -15,7 +15,7 @@ void test_scenario(int scenario, vector<int>& A, int N, int M, ofstream& file){
     auto start = high_resolution_clock::now();
     execute_scenario(scenario, abb, A, M);
     auto end = high_resolution_clock::now();
-    time_abb = duration_cast<milliseconds>(end - start).count();
+    time_abb = duration_cast<nanoseconds>(end - start).count();
     delete abb;
 
     // Splay Tree
@@ -24,7 +24,7 @@ void test_scenario(int scenario, vector<int>& A, int N, int M, ofstream& file){
     start = high_resolution_clock::now();
     execute_scenario(scenario, st, A, M);
     end = high_resolution_clock::now();
-    time_splay = duration_cast<milliseconds>(end - start).count();
+    time_splay = duration_cast<nanoseconds>(end - start).count();
     delete st;
 
     file << N << "," << M << "," << scenario << "," << time_abb << "," << time_splay << "\n";
@@ -32,7 +32,7 @@ void test_scenario(int scenario, vector<int>& A, int N, int M, ofstream& file){
 
 int main() {
     ofstream file("resultados_experimento.csv");
-    file << "N,M,Escenario,Tiempo ABB (ms),Tiempo Splay Tree (ms)\n";
+    file << "N,M,Escenario,Tiempo ABB (ns),Tiempo Splay Tree (ns)\n";
 
     for (double i = 0.1; i < 1.0; i += 0.1) {
         cout << "---------------------" << endl;
