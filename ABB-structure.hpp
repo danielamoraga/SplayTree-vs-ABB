@@ -1,5 +1,5 @@
-#include <iostream>
 #include <cstdio>
+#include <iostream>
 #include <queue>
 using namespace std;
 
@@ -7,16 +7,25 @@ using namespace std;
 struct ABB {
     int size = 0;
     int* r;
-    ABB* izq; // vacío o r es mayor que todos los elementos de izq
-    ABB* der; // vacío o r es menor que todos los elementos de der
+    ABB* izq;  // vacío o r es mayor que todos los elementos de izq
+    ABB* der;  // vacío o r es menor que todos los elementos de der
 
-    ABB() : r(nullptr), izq(nullptr), der(nullptr) {} // árbol vacío
+    ABB() : r(nullptr), izq(nullptr), der(nullptr) {}  // árbol vacío
+
+    ~ABB() {
+        if (r != nullptr) delete r;
+        if (izq != nullptr) delete izq;
+        if (der != nullptr) delete der;
+    }
 
     bool search(int x) {
         if (r == nullptr) return false;
-        if (x == *r) return true;
-        else if (x < *r) return izq != nullptr && izq->search(x);
-        else return der != nullptr && der->search(x);
+        if (x == *r)
+            return true;
+        else if (x < *r)
+            return izq != nullptr && izq->search(x);
+        else
+            return der != nullptr && der->search(x);
         return false;
     }
 
@@ -40,7 +49,7 @@ struct ABB {
     void display() {
         if (r == nullptr) return;
         cout << *r << " ";
-        while (izq != nullptr || der!= nullptr) {
+        while (izq != nullptr || der != nullptr) {
             cout << endl;
             izq->display();
             der->display();

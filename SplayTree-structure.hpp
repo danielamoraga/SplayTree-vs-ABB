@@ -8,6 +8,12 @@ struct SplayTree {
 
     SplayTree() : r(nullptr), izq(nullptr), der(nullptr) {}
 
+    ~SplayTree() {
+        if (r != nullptr) delete r;
+        if (izq != nullptr) delete izq;
+        if (der != nullptr) delete der;
+    }
+
    private:
     // Rotación derecha
     void zig() {
