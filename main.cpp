@@ -22,8 +22,17 @@ int main() {
         delete st;
 
         // second scenario
+        abb = new ABB;
+        st = new SplayTree;
+        start = high_resolution_clock::now();
+        second_scenario(abb, st, A, M);
+        end = high_resolution_clock::now();
+        double second_time = duration_cast<milliseconds>(end - start).count();
+        cout << "Tiempo de ejecución del segundo escenario: " << second_time << " ms" << endl;
+        delete abb;
+        delete st;
 
-        // Ejecutar Tercer Escenario
+        // third scenario
         abb = new ABB;
         st = new SplayTree;
         start = high_resolution_clock::now();
@@ -35,6 +44,15 @@ int main() {
         delete st;
 
         // fourth scenario
+        abb = new ABB;
+        st = new SplayTree;
+        start = high_resolution_clock::now();
+        second_scenario(abb, st, A, M);
+        end = high_resolution_clock::now();
+        double fourth_time = duration_cast<milliseconds>(end - start).count();
+        cout << "Tiempo de ejecución del cuarto escenario: " << fourth_time << " ms" << endl;
+        delete abb;
+        delete st;
     }
 
     return 0;
