@@ -19,13 +19,16 @@ struct ABB {
     }
 
     bool search(int x) {
-        if (r == nullptr) return false;
-        if (x == *r)
-            return true;
-        else if (x < *r)
-            return izq != nullptr && izq->search(x);
-        else
-            return der != nullptr && der->search(x);
+        ABB* current = this;
+        while (current != nullptr) {
+            if (x == *(current->r)) {
+                return true;
+            } else if (x < *(current->r)) {
+                current = current->izq;
+            } else {
+                current = current->der;
+            }
+        }
         return false;
     }
 
@@ -33,18 +36,31 @@ struct ABB {
         if (r == nullptr) {
             r = new int(x);
             size++;
+            return;
         }
-        else if (x < *r) {
-            if (izq == nullptr) izq = new ABB();
-            izq->insert(x);
-            size++;
-        }
-        else {
-            if (der == nullptr) der = new ABB();
-            der->insert(x);
-            size++;
+
+        ABB* current = this;
+        while (true) {
+            if (x < *(current->r)) {
+                if (current->izq == nullptr) {
+                    current->izq = new ABB();
+                    current->izq->r = new int(x);
+                    current->size++;
+                    break;
+                }
+                current = current->izq;
+            } else {
+                if (current->der == nullptr) {
+                    current->der = new ABB();
+                    current->der->r = new int(x);
+                    current->size++;
+                    break;
+                }
+                current = current->der;
+            }
         }
     }
+
 
     void display() {
         if (r == nullptr) return;

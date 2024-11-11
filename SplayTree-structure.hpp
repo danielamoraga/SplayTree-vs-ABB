@@ -86,39 +86,58 @@ struct SplayTree {
 
    public:
     bool search(int x) {
-        /* buscar x como en ABB */
-        if (x == *r) {
-            splay(x);
-            return true;
-        }
-        else if (x < *r) {
-            if (izq == nullptr) {
-                splay(*r);  // splay del que debería ser el parent de x
-                return false;
+        SplayTree* current = this;
+        SplayTree* parent = nullptr;
+
+        while (current != nullptr && current->r != nullptr) {
+            if (x == *(current->r)) {
+                current->splay(x);  // Lleva el nodo encontrado a la raíz
+                return true;
             }
-            return izq->search(x);
-        }
-        else if (x > *r) {
-            if (der == nullptr) {
-                splay(*r);  // splay del que debería ser el parent de x
-                return false;
+            parent = current;
+            if (x < *(current->r)) {
+                current = current->izq;
+            } else {
+                current = current->der;
             }
         }
-        return der->search(x);
+
+        // Si no encontramos el valor, hacemos splay del nodo donde debería estar
+        if (parent && parent->r != nullptr) {
+            parent->splay(*(parent->r));
+        }
+
+        return false;
     }
+
 
     void insert(int x) {
         if (r == nullptr) {
             r = new int(x);
             splay(x);
+            return;
         }
-        else if (x < *r) {
-            if (izq == nullptr) izq = new SplayTree();
-            izq->insert(x);
+
+        SplayTree* current = this;
+        while (true) {
+            if (x < *(current->r)) {
+                if (current->izq == nullptr) {
+                    current->izq = new SplayTree();
+                    current->izq->r = new int(x);
+                    break;
+                }
+                current = current->izq;
+            } else {
+                if (current->der == nullptr) {
+                    current->der = new SplayTree();
+                    current->der->r = new int(x);
+                    break;
+                }
+                current = current->der;
+            }
         }
-        else {
-            if (der == nullptr) der = new SplayTree();
-            der->insert(x);
-        }
+
+        splay(x);  // Llevar el elemento insertado a la raíz
     }
+
 };
