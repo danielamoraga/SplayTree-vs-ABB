@@ -47,6 +47,8 @@ int main() {
     }
 
     file.close();
+    cout << "---------------------" << endl;
+    cout << "Experimento terminado." << endl;
 
     return 0;
 }
