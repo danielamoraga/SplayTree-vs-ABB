@@ -18,21 +18,24 @@ vector<int> random_vector(int N) {
 }
 
 int main() {
-    int b = true;
     ABB* abb = new ABB;
     SplayTree* st = new SplayTree;
-    
     int N = 5;
     int M = 2 * N;
 
     vector<int> A = random_vector(N);
-    
+
     auto start = high_resolution_clock::now();
-    first_scenario(abb, st, A, M);
-    if (b == true) cout << "Todas las búsquedas fueron exitosas." << endl;
+    execute_scenario(1, abb, A, M);
     auto end = high_resolution_clock::now();
-    double time = duration_cast<nanoseconds>(end - start).count();
-    cout << "Tiempo de ejecución : " << time << "ns" << endl;
+    double time_abb = duration_cast<nanoseconds>(end - start).count();
+    cout << "Tiempo de ejecución abb : " << time_abb << "ns" << endl;
+
+    start = high_resolution_clock::now();
+    execute_scenario(1, st, A, M);
+    end = high_resolution_clock::now();
+    double time_splay = duration_cast<nanoseconds>(end - start).count();
+    cout << "Tiempo de ejecución splay tree : " << time_splay << "ns" << endl;
 
     return 0;
 }

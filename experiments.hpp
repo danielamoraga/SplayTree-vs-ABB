@@ -9,25 +9,26 @@
 
 // Genera un vector con N elementos distintos
 vector<int> create_random_vector(int N) {
+    cout << "Creando vector..." << endl;
+
+    // Generar una secuencia de números únicos de 1 a N
     vector<int> A(N);
-    map<int, int> m;
     for (int i = 0; i < N; i++) {
-        int x = 1 + rand() % 100;  // [1, 100]
-        if (m.find(x) == m.end()) {
-            A[i] = x;
-            m[x] = 1;
-        }
-        else
-            i--;
+        A[i] = i + 1;  // Llenar con valores únicos
     }
+
+    // Mezclar la secuencia de valores únicos para hacerla aleatoria
+    auto rng = default_random_engine{};
+    shuffle(A.begin(), A.end(), rng);
+
     return A;
 }
 
-// Inserta N enteros distintos en un ABB y un Splay Tree
-void insert_in_trees(vector<int>& A, ABB* abb, SplayTree* st) {
+// Inserta N enteros distintos en un ABB o un Splay Tree
+template <typename Tree>
+void insert_elements(vector<int>& A, Tree* t) {
     for (int x : A) {
-        abb->insert(x);
-        st->insert(x);
+        t->insert(x);
     }
 }
 
@@ -47,6 +48,7 @@ double f(int i, double C) {
 
 // Genera el vector B con búsquedas uniformes
 vector<int> create_B(vector<int>& A, int M) {
+    auto rng = default_random_engine{};
     int N = A.size();
     // buscar v[i] M/N veces
     vector<int> B;  // valores a buscar
@@ -58,12 +60,13 @@ vector<int> create_B(vector<int>& A, int M) {
         }
     }
 
-    random_shuffle(B.begin(), B.end());  // permutación aleatoria de B
+    shuffle(B.begin(), B.end(), rng);  // permutación aleatoria de B
     return B;
 }
 
 // Genera el vector B con búsquedas sesgadas
 vector<int> create_biased_B(vector<int>& A, int M) {
+    auto rng = default_random_engine{};
     int N = A.size();
     double C = compute_C(N);
     vector<int> B;  // valores a buscar
@@ -77,44 +80,51 @@ vector<int> create_biased_B(vector<int>& A, int M) {
         }
     }
 
-    random_shuffle(B.begin(), B.end());  // permutación aleatoria de B
+    shuffle(B.begin(), B.end(), rng);  // permutación aleatoria de B
     return B;
 }
 
 // Hace M búsquedas por valores escogidos entre los elementos insertados
-void search_test(vector<int>& B, ABB* abb, SplayTree* st) {
+template <typename Tree>
+void search_elements(vector<int>& B, Tree* t) {
     for (int x : B) {
-      abb->search(x);
-      st->search(x);
+        t->search(x);
     }
 }
 
-void first_scenario(ABB* abb, SplayTree* st, vector<int>& A, int M) {
-    random_shuffle(A.begin(), A.end());  // desordenar el vector para insertar aleatoriamente
-    insert_in_trees(A, abb, st);
-    vector<int> B = create_B(A, M);
-    search_test(B, abb, st);
-}
+template <typename Tree>
+void execute_scenario(int scenario, Tree* t, vector<int>& A, int M) {
+    vector<int> B;
+    auto rng = default_random_engine{};
+    switch (scenario) {
+        case 1:
+            shuffle(A.begin(), A.end(), rng);  // desordenar el vector para insertar aleatoriamente
+            insert_elements(A, t);
+            B = create_B(A, M);
+            search_elements(B, t);
+            break;
 
-void second_scenario(ABB* abb, SplayTree* st, vector<int>& A, int M) {
-    random_shuffle(A.begin(), A.end());  // desordenar el vector para insertar aleatoriamente
-    insert_in_trees(A, abb, st);
-    vector<int> B = create_biased_B(A, M);
-    search_test(B, abb, st);
-}
+        case 2:
+            shuffle(A.begin(), A.end(), rng);  // desordenar el vector para insertar aleatoriamente
+            insert_elements(A, t);
+            B = create_biased_B(A, M);
+            search_elements(B, t);
+            break;
 
-void third_scenario(ABB* abb, SplayTree* st, vector<int>& A, int M) {
-    sort(A.begin(), A.end());  // antes de insertar los elementos, se ordena A
-    insert_in_trees(A, abb, st);
-    vector<int> B = create_B(A, M);
-    search_test(B, abb, st);
-}
+        case 3:
+            sort(A.begin(), A.end());  // antes de insertar los elementos, se ordena A
+            insert_elements(A, t);
+            B = create_B(A, M);
+            search_elements(B, t);
+            break;
 
-void fourth_scenario(ABB* abb, SplayTree* st, vector<int>& A, int M) {
-    random_shuffle(A.begin(), A.end());  // desordenar el vector para insertar aleatoriamente
-    vector<int> C = A;
-    sort(C.begin(), C.end());
-    insert_in_trees(C, abb, st);
-    vector<int> B = create_biased_B(C, M);
-    search_test(B, abb, st);
+        case 4:
+            shuffle(A.begin(), A.end(), rng);  // desordenar el vector para insertar aleatoriamente
+            vector<int> C = A;
+            sort(C.begin(), C.end());
+            insert_elements(C, t);
+            B = create_biased_B(C, M);
+            search_elements(B, t);
+            break;
+    }
 }
