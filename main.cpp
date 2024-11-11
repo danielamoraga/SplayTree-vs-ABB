@@ -1,4 +1,4 @@
-#include "third-scenario.hpp"
+#include "experiments.hpp"
 #include <math.h>
 #include <chrono>
 using namespace chrono;
@@ -29,7 +29,7 @@ int main() {
         vector<int> A = random_vector(N);
 
         auto start = high_resolution_clock::now();
-        first_scenario(abb, st, A, N, M, b);
+        first_scenario(abb, st, A, M);
         auto end = high_resolution_clock::now();
         double first_time = duration_cast<nanoseconds>(end - start).count();
         cout << "Tiempo de ejecución del primer escenario: " << first_time << "ns" << endl;
@@ -37,7 +37,7 @@ int main() {
         // second scenario
 
         start = high_resolution_clock::now();
-        third_scenario(abb, st, A, N, M, b);
+        third_scenario(abb, st, A, M);
         end = high_resolution_clock::now();
         first_time = duration_cast<nanoseconds>(end - start).count();
         cout << "Tiempo de ejecución del tercer escenario: " << first_time << "ns" << endl;

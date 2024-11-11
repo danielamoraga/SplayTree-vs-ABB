@@ -1,4 +1,4 @@
-#include "first-scenario.hpp"
+#include "experiments.hpp"
 #include <math.h>
 #include <chrono>
 using namespace chrono;
@@ -28,7 +28,7 @@ int main() {
     vector<int> A = random_vector(N);
     
     auto start = high_resolution_clock::now();
-    first_scenario(abb, st, A, N, M, b);
+    first_scenario(abb, st, A, M);
     if (b == true) cout << "Todas las búsquedas fueron exitosas." << endl;
     auto end = high_resolution_clock::now();
     double time = duration_cast<nanoseconds>(end - start).count();
