@@ -1,74 +1,87 @@
-#include <cstdio>
 #include <iostream>
-#include <queue>
+#include <stack>
 using namespace std;
 
-/* Árbol Binario de Búsqueda clásico */
-struct ABB {
-    int size = 0;
-    int* r;
-    ABB* izq;  // vacío o r es mayor que todos los elementos de izq
-    ABB* der;  // vacío o r es menor que todos los elementos de der
+/* Árbol Binario de Búsqueda clásico adaptado */
+struct ABBNode {
+    int value;
+    ABBNode* left;
+    ABBNode* right;
+    ABBNode* parent;
 
-    ABB() : r(nullptr), izq(nullptr), der(nullptr) {}  // árbol vacío
+    ABBNode(int v) : value(v), left(nullptr), right(nullptr), parent(nullptr) {}
+};
+
+struct ABB {
+    ABBNode* root;
+    int size;
+
+    ABB() : root(nullptr), size(0) {}
 
     ~ABB() {
-        if (r != nullptr) delete r;
-        if (izq != nullptr) delete izq;
-        if (der != nullptr) delete der;
+        destroyTree(root);
     }
 
-    bool search(int x) {
-        ABB* current = this;
-        while (current != nullptr) {
-            if (x == *(current->r)) {
-                return true;
-            } else if (x < *(current->r)) {
-                current = current->izq;
+    void destroyTree(ABBNode* ABBNode) {
+        if (ABBNode) {
+            destroyTree(ABBNode->left);
+            destroyTree(ABBNode->right);
+            delete ABBNode;
+        }
+    }
+
+    // Inserción iterativa
+    void insert(int val) {
+        if (!root) {
+            root = new ABBNode(val);
+            size++;
+            return;
+        }
+
+        ABBNode* current = root;
+        ABBNode* parent = nullptr;
+
+        while (current) {
+            parent = current;
+            if (val < current->value) {
+                current = current->left;
+            } else if (val > current->value) {
+                current = current->right;
             } else {
-                current = current->der;
+                // Si el valor ya existe, no se inserta de nuevo
+                return;
+            }
+        }
+
+        ABBNode* newNode = new ABBNode(val);
+        if (val < parent->value) parent->left = newNode;
+        else parent->right = newNode;
+
+    }
+
+    // Búsqueda iterativa
+    bool search(int val) {
+        ABBNode* current = root;
+
+        while (current) {
+            if (val == current->value) {
+                return true;
+            } else if (val < current->value) {
+                current = current->left;
+            } else {
+                current = current->right;
             }
         }
         return false;
     }
 
-    void insert(int x) {
-        if (r == nullptr) {
-            r = new int(x);
-            size++;
-            return;
-        }
+    // Mostrar árbol en preorden
+    void display(ABBNode* ABBNode = nullptr) const {
+        if (!ABBNode) ABBNode = root;
+        if (!ABBNode) return;
 
-        ABB* current = this;
-        while (true) {
-            if (x < *(current->r)) {
-                if (current->izq == nullptr) {
-                    current->izq = new ABB();
-                    current->izq->r = new int(x);
-                    current->size++;
-                    break;
-                }
-                current = current->izq;
-            } else {
-                if (current->der == nullptr) {
-                    current->der = new ABB();
-                    current->der->r = new int(x);
-                    current->size++;
-                    break;
-                }
-                current = current->der;
-            }
-        }
-    }
-
-
-    void display() {
-        if (r == nullptr) return;
-        cout << *r << " ";
-        while (izq != nullptr || der != nullptr) {
-            cout << endl;
-            izq->display();
-            der->display();
-        }
+        cout << ABBNode->value << " ";
+        if (ABBNode->left) display(ABBNode->left);
+        if (ABBNode->right) display(ABBNode->right);
     }
 };
