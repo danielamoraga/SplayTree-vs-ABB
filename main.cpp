@@ -28,11 +28,13 @@ void test_scenario(int scenario, vector<int>& A, int N, int M, ofstream& file){
     delete st;
 
     file << N << "," << M << "," << scenario << "," << time_abb << "," << time_splay << "\n";
+    file.flush();
 }
 
 int main() {
     ofstream file("resultados_experimento.csv");
     file << "N,M,Escenario,Tiempo ABB (ns),Tiempo Splay Tree (ns)\n";
+    file.flush();
 
     for (double i = 0.1; i < 1.0; i += 0.1) {
         cout << "---------------------" << endl;
