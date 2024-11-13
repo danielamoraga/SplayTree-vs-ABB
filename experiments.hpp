@@ -1,11 +1,7 @@
 #include <math.h>
-
 #include <algorithm>
 #include <map>
 #include <random>
-
-#include "ABB-structure.hpp"
-#include "SplayTree-structure.hpp"
 
 // Genera un vector con N elementos distintos
 vector<int> create_random_vector(int N) {

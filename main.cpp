@@ -2,6 +2,8 @@
 #include <fstream>
 #include <iostream>
 
+#include "ABB-structure.hpp"
+#include "SplayTree-structure.hpp"
 #include "experiments.hpp"
 using namespace chrono;
 
