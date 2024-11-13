@@ -1,19 +1,11 @@
-#include <iostream>
-using namespace std;
+// SplayTree-structure.hpp
+#ifndef SPLAYTREE_STRUCTURE_HPP
+#define SPLAYTREE_STRUCTURE_HPP
 
-#include <iostream>
-
-struct STNode {
-    int value;
-    STNode* left;
-    STNode* right;
-    STNode* parent;
-
-    STNode(int v) : value(v), left(nullptr), right(nullptr), parent(nullptr) {}
-};
+#include "Node.hpp"
 
 struct SplayTree {
-    STNode* root;
+    Node* root;
 
     SplayTree() : root(nullptr) {}
 
@@ -22,16 +14,16 @@ struct SplayTree {
     }
 
     private:
-        void destroyTree(STNode* STNode) {
-            if (STNode) {
-                destroyTree(STNode->left);
-                destroyTree(STNode->right);
-                delete STNode;
+        void destroyTree(Node* Node) {
+            if (Node) {
+                destroyTree(Node->left);
+                destroyTree(Node->right);
+                delete Node;
             }
         }
         // Implementación de las rotaciones simples
-        void zig(STNode* x) {
-            STNode* p = x->parent;
+        void zig(Node* x) {
+            Node* p = x->parent;
             if (!p) return;
 
             // Rotación derecha
@@ -50,8 +42,8 @@ struct SplayTree {
             }
         }
 
-        void zag(STNode* x) {
-            STNode* p = x->parent;
+        void zag(Node* x) {
+            Node* p = x->parent;
             if (!p) return;
 
             // Rotación izquierda
@@ -71,31 +63,31 @@ struct SplayTree {
         }
 
         // Implementación de los casos de Splay usando zig y zag
-        void zigzig(STNode* x) {
+        void zigzig(Node* x) {
             zig(x->parent);  // Primer zig en el parent
             zig(x);         // Segundo zig en x
         }
 
-        void zagzag(STNode* x) {
+        void zagzag(Node* x) {
             zag(x->parent);  // Primer zag en el parent
             zag(x);         // Segundo zag en x
         }
 
-        void zigzag(STNode* x) {
+        void zigzag(Node* x) {
             zig(x);         // Primer zig en x
             zag(x);         // Segundo zag en x
         }
 
-        void zagzig(STNode* x) {
+        void zagzig(Node* x) {
             zag(x);         // Primer zag en x
             zig(x);         // Segundo zig en x
         }
 
         // Implementación del método Splay
-        void splay(STNode* x) {
+        void splay(Node* x) {
             while (x != root) {  // Iterar hasta que x sea la raíz
-                STNode* p = x->parent;
-                STNode* g = p ? p->parent : nullptr;
+                Node* p = x->parent;
+                Node* g = p ? p->parent : nullptr;
 
                 if (!p) {
                     break;
@@ -121,12 +113,12 @@ struct SplayTree {
     public:
         void insert(int val) {
             if (!root) {
-                root = new STNode(val);
+                root = new Node(val);
                 return;
             }
 
-            STNode* current = root;
-            STNode* parent = nullptr;
+            Node* current = root;
+            Node* parent = nullptr;
             // primero se busca la posición para el nuevo nodo
             while (current) {
                 parent = current;
@@ -142,7 +134,7 @@ struct SplayTree {
                 }
             }
 
-            STNode* newNode = new STNode(val);
+            Node* newNode = new Node(val);
             newNode->parent = parent;
 
             if (val < parent->value){
@@ -156,8 +148,8 @@ struct SplayTree {
         }
 
         bool search(int val) {
-            STNode* current = root;
-            STNode* lastVisited = nullptr;
+            Node* current = root;
+            Node* lastVisited = nullptr;
 
             while(current){
                 lastVisited = current;
@@ -179,3 +171,5 @@ struct SplayTree {
             return false;
         }
 };
+
+#endif

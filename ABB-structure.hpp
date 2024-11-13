@@ -1,19 +1,12 @@
-#include <iostream>
-#include <stack>
-using namespace std;
+// ABB-structure.hpp
+#ifndef ABB_STRUCTURE_HPP
+#define ABB_STRUCTURE_HPP
+
+#include "Node.hpp"
 
 /* Árbol Binario de Búsqueda clásico adaptado */
-struct ABBNode {
-    int value;
-    ABBNode* left;
-    ABBNode* right;
-    ABBNode* parent;
-
-    ABBNode(int v) : value(v), left(nullptr), right(nullptr), parent(nullptr) {}
-};
-
 struct ABB {
-    ABBNode* root;
+    Node* root;
     int size;
 
     ABB() : root(nullptr), size(0) {}
@@ -22,24 +15,24 @@ struct ABB {
         destroyTree(root);
     }
 
-    void destroyTree(ABBNode* ABBNode) {
-        if (ABBNode) {
-            destroyTree(ABBNode->left);
-            destroyTree(ABBNode->right);
-            delete ABBNode;
+    void destroyTree(Node* Node) {
+        if (Node) {
+            destroyTree(Node->left);
+            destroyTree(Node->right);
+            delete Node;
         }
     }
 
     // Inserción iterativa
     void insert(int val) {
         if (!root) {
-            root = new ABBNode(val);
+            root = new Node(val);
             size++;
             return;
         }
 
-        ABBNode* current = root;
-        ABBNode* parent = nullptr;
+        Node* current = root;
+        Node* parent = nullptr;
 
         while (current) {
             parent = current;
@@ -53,7 +46,7 @@ struct ABB {
             }
         }
 
-        ABBNode* newNode = new ABBNode(val);
+        Node* newNode = new Node(val);
         if (val < parent->value) parent->left = newNode;
         else parent->right = newNode;
 
@@ -61,7 +54,7 @@ struct ABB {
 
     // Búsqueda iterativa
     bool search(int val) {
-        ABBNode* current = root;
+        Node* current = root;
 
         while (current) {
             if (val == current->value) {
@@ -76,12 +69,14 @@ struct ABB {
     }
 
     // Mostrar árbol en preorden
-    void display(ABBNode* ABBNode = nullptr) const {
-        if (!ABBNode) ABBNode = root;
-        if (!ABBNode) return;
+    void display(Node* Node = nullptr) const {
+        if (!Node) Node = root;
+        if (!Node) return;
 
-        cout << ABBNode->value << " ";
-        if (ABBNode->left) display(ABBNode->left);
-        if (ABBNode->right) display(ABBNode->right);
+        cout << Node->value << " ";
+        if (Node->left) display(Node->left);
+        if (Node->right) display(Node->right);
     }
 };
+
+#endif
