@@ -27,6 +27,7 @@ vector<int> create_random_vector(int N) {
 // Inserta N enteros distintos en un ABB o un Splay Tree
 template <typename Tree>
 void insert_elements(vector<int>& A, Tree* t) {
+    cout << "  Insertando elementos" << endl;
     for (int x : A) {
         t->insert(x);
     }
@@ -48,6 +49,7 @@ double f(int i, double C) {
 
 // Genera el vector B con búsquedas uniformes
 vector<int> create_B(vector<int>& A, int M) {
+    cout << "  Creando B" << endl;
     auto rng = default_random_engine{};
     int N = A.size();
     // buscar v[i] M/N veces
@@ -66,6 +68,7 @@ vector<int> create_B(vector<int>& A, int M) {
 
 // Genera el vector B con búsquedas sesgadas
 vector<int> create_biased_B(vector<int>& A, int M) {
+    cout << "  Creando B sesgado" << endl;
     auto rng = default_random_engine{};
     int N = A.size();
     double C = compute_C(N);
@@ -87,6 +90,7 @@ vector<int> create_biased_B(vector<int>& A, int M) {
 // Hace M búsquedas por valores escogidos entre los elementos insertados
 template <typename Tree>
 void search_elements(vector<int>& B, Tree* t) {
+    cout << "  Buscando elementos" << endl;
     for (int x : B) {
         t->search(x);
     }

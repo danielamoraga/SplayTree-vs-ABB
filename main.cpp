@@ -8,11 +8,11 @@
 using namespace chrono;
 
 void test_scenario(int scenario, vector<int>& A, int N, int M, ofstream& file){
-    cout << "Probando escenario " << scenario << "..." << endl;
+    cout << "---Escenario " << scenario << "---" << endl;
     double time_abb, time_splay;
 
     // ABB
-    cout << "Probando para ABB" << endl;
+    cout << "--ABB--" << endl;
     ABB* abb = new ABB;
     auto start = high_resolution_clock::now();
     execute_scenario(scenario, abb, A, M);
@@ -21,7 +21,7 @@ void test_scenario(int scenario, vector<int>& A, int N, int M, ofstream& file){
     delete abb;
 
     // Splay Tree
-    cout << "Probando Splay Tree" << endl;
+    cout << "--Splay Tree--" << endl;
     SplayTree* st = new SplayTree;
     start = high_resolution_clock::now();
     execute_scenario(scenario, st, A, M);
