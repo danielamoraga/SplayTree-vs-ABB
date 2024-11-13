@@ -38,18 +38,21 @@ struct ABB {
             parent = current;
             if (val < current->value) {
                 current = current->left;
-            } else if (val > current->value) {
+            }
+            else if (val > current->value) {
                 current = current->right;
-            } else {
+            }
+            else {
                 // Si el valor ya existe, no se inserta de nuevo
                 return;
             }
         }
 
         Node* newNode = new Node(val);
-        if (val < parent->value) parent->left = newNode;
-        else parent->right = newNode;
-
+        if (val < parent->value)
+            parent->left = newNode;
+        else
+            parent->right = newNode;
     }
 
     // Búsqueda iterativa
@@ -59,9 +62,11 @@ struct ABB {
         while (current) {
             if (val == current->value) {
                 return true;
-            } else if (val < current->value) {
+            }
+            else if (val < current->value) {
                 current = current->left;
-            } else {
+            }
+            else {
                 current = current->right;
             }
         }

@@ -3,13 +3,13 @@
 #define EXPERIMENTS_HPP
 
 #include <math.h>
+
 #include <algorithm>
+#include <chrono>
 #include <map>
 #include <random>
-#include <chrono>
 
 using namespace chrono;
-
 
 // Genera un vector con N elementos distintos
 vector<int> create_random_vector(int N) {

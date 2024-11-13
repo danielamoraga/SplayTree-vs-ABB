@@ -5,7 +5,7 @@
 #include "SplayTree-structure.hpp"
 #include "experiments.hpp"
 
-void test_scenario(int scenario, vector<int>& A, int N, int M, ofstream& file){
+void test_scenario(int scenario, vector<int>& A, int N, int M, ofstream& file) {
     cout << "---Escenario " << scenario << "---" << endl;
     double time_abb, time_splay;
 
@@ -37,7 +37,7 @@ int main() {
         cout << "N = 10^6 * " << i << endl;
         vector<int> A = create_random_vector(N);
 
-        for(int scenario=1; scenario<=4; scenario++){
+        for (int scenario = 1; scenario <= 4; scenario++) {
             test_scenario(scenario, A, N, M, file);
         }
     }
