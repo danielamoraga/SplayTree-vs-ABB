@@ -1,3 +1,7 @@
+// experiments.hpp
+#ifndef EXPERIMENTS_HPP
+#define EXPERIMENTS_HPP
+
 #include <math.h>
 #include <algorithm>
 #include <map>
@@ -124,3 +128,5 @@ void execute_scenario(int scenario, Tree* t, vector<int>& A, int M) {
             break;
     }
 }
+
+#endif
