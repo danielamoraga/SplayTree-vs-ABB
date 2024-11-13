@@ -6,6 +6,10 @@
 #include <algorithm>
 #include <map>
 #include <random>
+#include <chrono>
+
+using namespace chrono;
+
 
 // Genera un vector con N elementos distintos
 vector<int> create_random_vector(int N) {
@@ -97,7 +101,7 @@ void search_elements(vector<int>& B, Tree* t) {
 }
 
 template <typename Tree>
-void execute_scenario(int scenario, Tree* t, vector<int>& A, int M) {
+double execute_scenario(int scenario, Tree* t, vector<int>& A, int M) {
     vector<int> B;
     auto rng = default_random_engine{};
     switch (scenario) {
@@ -105,21 +109,18 @@ void execute_scenario(int scenario, Tree* t, vector<int>& A, int M) {
             shuffle(A.begin(), A.end(), rng);  // desordenar el vector para insertar aleatoriamente
             insert_elements(A, t);
             B = create_B(A, M);
-            search_elements(B, t);
             break;
 
         case 2:
             shuffle(A.begin(), A.end(), rng);  // desordenar el vector para insertar aleatoriamente
             insert_elements(A, t);
             B = create_biased_B(A, M);
-            search_elements(B, t);
             break;
 
         case 3:
             sort(A.begin(), A.end());  // antes de insertar los elementos, se ordena A
             insert_elements(A, t);
             B = create_B(A, M);
-            search_elements(B, t);
             break;
 
         case 4:
@@ -128,9 +129,15 @@ void execute_scenario(int scenario, Tree* t, vector<int>& A, int M) {
             sort(C.begin(), C.end());
             insert_elements(C, t);
             B = create_biased_B(C, M);
-            search_elements(B, t);
             break;
     }
+
+    auto start = high_resolution_clock::now();
+    search_elements(B, t);
+    auto end = high_resolution_clock::now();
+    double search_time = duration_cast<nanoseconds>(end - start).count();
+
+    return search_time;
 }
 
 #endif

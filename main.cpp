@@ -1,11 +1,9 @@
-#include <chrono>
 #include <fstream>
 #include <iostream>
 
 #include "ABB-structure.hpp"
 #include "SplayTree-structure.hpp"
 #include "experiments.hpp"
-using namespace chrono;
 
 void test_scenario(int scenario, vector<int>& A, int N, int M, ofstream& file){
     cout << "---Escenario " << scenario << "---" << endl;
@@ -14,19 +12,13 @@ void test_scenario(int scenario, vector<int>& A, int N, int M, ofstream& file){
     // ABB
     cout << "--ABB--" << endl;
     ABB* abb = new ABB;
-    auto start = high_resolution_clock::now();
-    execute_scenario(scenario, abb, A, M);
-    auto end = high_resolution_clock::now();
-    time_abb = duration_cast<nanoseconds>(end - start).count();
+    time_abb = execute_scenario(scenario, abb, A, M);
     delete abb;
 
     // Splay Tree
     cout << "--Splay Tree--" << endl;
     SplayTree* st = new SplayTree;
-    start = high_resolution_clock::now();
-    execute_scenario(scenario, st, A, M);
-    end = high_resolution_clock::now();
-    time_splay = duration_cast<nanoseconds>(end - start).count();
+    time_splay = execute_scenario(scenario, st, A, M);
     delete st;
 
     file << N << "," << M << "," << scenario << "," << time_abb << "," << time_splay << "\n";
